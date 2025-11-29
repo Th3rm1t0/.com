@@ -5,9 +5,7 @@
         "context": "."
     },
     "features": {
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "24"
-        }
+        "ghcr.io/devcontainers/features/node:1": {}
     },
     "customizations": {
         "vscode": {
@@ -16,5 +14,5 @@
             ]
         }
     },
-    "postCreateCommand": "./start.sh"
+    "postStartCommand": ".devcontainer/start.sh"
 }
