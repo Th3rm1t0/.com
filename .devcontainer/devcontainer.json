@@ -1,0 +1,20 @@
+{
+    "name": "devcontainer",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "24"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "biomejs.biome"
+            ]
+        }
+    },
+    "postCreateCommand": "./start.sh"
+}
