@@ -37,7 +37,7 @@ const AsciiRenderer: FC = () => {
 		effect.domElement.style.top = "0";
 		effect.domElement.style.left = "0";
 		effect.domElement.style.pointerEvents = "none";
-		effect.domElement.style.color = "#bdbdbdff";
+		effect.domElement.style.color = "#727272ff";
 		effect.domElement.style.backgroundColor = "transparent";
 		effectRef.current = effect;
 
@@ -69,8 +69,8 @@ export const BoxRotate: FC = () => {
 			camera={{ position: [0, 0, 4] }}
 		>
 			<color attach="background" args={["#050914"]} />
-			<ambientLight intensity={0.05} />
-			<directionalLight color="#bdbdbdff" position={[2, 3, 5]} />
+			<ambientLight intensity={0.01} />
+			<directionalLight color="#727272ff" position={[2, 3, 5]} />
 			<RotatingBox />
 			<AsciiRenderer />
 		</Canvas>
