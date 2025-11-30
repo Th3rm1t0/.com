@@ -8,7 +8,7 @@ export const Top: FC = () => {
 				minHeight: "100vh",
 				backgroundColor: "#17182cff",
 				color: "#e8e8e8",
-				fontFamily: "'Space Grotesk', 'Inter', system-ui, sans-serif",
+				fontFamily: "'Noto Sans JP', sans-serif",
 			}}
 		>
 			<section
@@ -40,6 +40,8 @@ export const Top: FC = () => {
 							fontWeight: 700,
 							color: "#fefefe",
 							textShadow: "0 8px 30px rgba(0,0,0,0.75)",
+							fontFamily: "Inter, sans-serif",
+							fontStyle: "light",
 						}}
 					>
 						Th3rm1t3.com
@@ -59,7 +61,6 @@ export const Top: FC = () => {
 				</div>
 			</section>
 			<section>
-				{/* 各種リンク用のアイコン */}
 				<div
 					style={{
 						display: "flex",
