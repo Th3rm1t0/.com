@@ -1,11 +1,4 @@
-import {
-	type FC,
-	lazy,
-	Suspense,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { type FC, lazy, Suspense, useEffect, useRef, useState } from "react";
 
 const LazyBoxRotate = lazy(async () => {
 	const module = await import("../components/BoxRotate");
@@ -198,6 +191,29 @@ export const Top: FC = () => {
 								loading="lazy"
 							/>
 							<span style={{ fontSize: "0.85rem" }}>Zenn</span>
+						</a>
+					</div>
+					<div id="bluesky">
+						<a
+							href="https://bsky.app/profile/th3rm1t3.bsky.social"
+							target="_blank"
+							rel="noopener noreferrer"
+							style={{
+								color: "#fefefe",
+								textDecoration: "none",
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+								gap: "0.5rem",
+							}}
+						>
+							<img
+								src="/bluesky.svg"
+								alt="Bluesky"
+								style={{ width: "32px", height: "32px", display: "block" }}
+								loading="lazy"
+							/>
+							<span style={{ fontSize: "0.85rem" }}>Bluesky</span>
 						</a>
 					</div>
 				</div>
