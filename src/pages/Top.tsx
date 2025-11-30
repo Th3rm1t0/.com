@@ -87,6 +87,7 @@ export const Top: FC = () => {
 								src="/x.svg"
 								alt="X"
 								style={{ width: "32px", height: "32px", display: "block" }}
+								loading="lazy"
 							/>
 							<span style={{ fontSize: "0.85rem" }}>Twitter</span>
 						</a>
@@ -109,6 +110,7 @@ export const Top: FC = () => {
 								src="/github.svg"
 								alt="GitHub"
 								style={{ width: "32px", height: "32px", display: "block" }}
+								loading="lazy"
 							/>
 							<span style={{ fontSize: "0.85rem" }}>GitHub</span>
 						</a>
@@ -131,6 +133,7 @@ export const Top: FC = () => {
 								src="/zenn.svg"
 								alt="Zenn"
 								style={{ width: "32px", height: "32px", display: "block" }}
+								loading="lazy"
 							/>
 							<span style={{ fontSize: "0.85rem" }}>Zenn</span>
 						</a>
