@@ -1,7 +1,40 @@
-import type { FC } from "react";
-import { BoxRotate } from "../components/BoxRotate";
+import {
+	type FC,
+	lazy,
+	Suspense,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
+
+const LazyBoxRotate = lazy(async () => {
+	const module = await import("../components/BoxRotate");
+	return { default: module.BoxRotate };
+});
 
 export const Top: FC = () => {
+	const [shouldLoadBox, setShouldLoadBox] = useState(false);
+	const heroRef = useRef<HTMLElement | null>(null);
+
+	useEffect(() => {
+		if (shouldLoadBox) return;
+		const target = heroRef.current;
+		if (!target) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.some((entry) => entry.isIntersecting)) {
+					setShouldLoadBox(true);
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: "200px" },
+		);
+
+		observer.observe(target);
+		return () => observer.disconnect();
+	}, [shouldLoadBox]);
+
 	return (
 		<main
 			style={{
@@ -12,13 +45,42 @@ export const Top: FC = () => {
 			}}
 		>
 			<section
+				ref={(node) => {
+					heroRef.current = node;
+				}}
 				style={{
 					position: "relative",
 					minHeight: "65vh",
 					overflow: "hidden",
 				}}
 			>
-				<BoxRotate />
+				{shouldLoadBox ? (
+					<Suspense
+						fallback={
+							<div
+								aria-hidden="true"
+								style={{
+									position: "absolute",
+									inset: 0,
+									background:
+										"radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 60%)",
+								}}
+							/>
+						}
+					>
+						<LazyBoxRotate />
+					</Suspense>
+				) : (
+					<div
+						aria-hidden="true"
+						style={{
+							position: "absolute",
+							inset: 0,
+							background:
+								"radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 60%)",
+						}}
+					/>
+				)}
 				<div
 					style={{
 						position: "relative",
