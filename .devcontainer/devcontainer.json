@@ -5,16 +5,15 @@
         "context": "."
     },
     "features": {
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "24"
-        }
+        "ghcr.io/devcontainers/features/node:1": {}
     },
     "customizations": {
         "vscode": {
             "extensions": [
-                "biomejs.biome"
+                "biomejs.biome",
+                "openai.chatgpt"
             ]
         }
     },
-    "postCreateCommand": "./start.sh"
+    "postStartCommand": ".devcontainer/start.sh"
 }
