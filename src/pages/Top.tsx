@@ -1,24 +1,86 @@
-import type { FC } from "react";
-import { BoxRotate } from "../components/BoxRotate";
+import {
+	type FC,
+	lazy,
+	Suspense,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
+
+const LazyBoxRotate = lazy(async () => {
+	const module = await import("../components/BoxRotate");
+	return { default: module.BoxRotate };
+});
 
 export const Top: FC = () => {
+	const [shouldLoadBox, setShouldLoadBox] = useState(false);
+	const heroRef = useRef<HTMLElement | null>(null);
+
+	useEffect(() => {
+		if (shouldLoadBox) return;
+		const target = heroRef.current;
+		if (!target) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.some((entry) => entry.isIntersecting)) {
+					setShouldLoadBox(true);
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: "200px" },
+		);
+
+		observer.observe(target);
+		return () => observer.disconnect();
+	}, [shouldLoadBox]);
+
 	return (
 		<main
 			style={{
 				minHeight: "100vh",
 				backgroundColor: "#17182cff",
 				color: "#e8e8e8",
-				fontFamily: "'Space Grotesk', 'Inter', system-ui, sans-serif",
+				fontFamily: "'Noto Sans JP', sans-serif",
 			}}
 		>
 			<section
+				ref={(node) => {
+					heroRef.current = node;
+				}}
 				style={{
 					position: "relative",
 					minHeight: "65vh",
 					overflow: "hidden",
 				}}
 			>
-				<BoxRotate />
+				{shouldLoadBox ? (
+					<Suspense
+						fallback={
+							<div
+								aria-hidden="true"
+								style={{
+									position: "absolute",
+									inset: 0,
+									background:
+										"radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 60%)",
+								}}
+							/>
+						}
+					>
+						<LazyBoxRotate />
+					</Suspense>
+				) : (
+					<div
+						aria-hidden="true"
+						style={{
+							position: "absolute",
+							inset: 0,
+							background:
+								"radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 60%)",
+						}}
+					/>
+				)}
 				<div
 					style={{
 						position: "relative",
@@ -40,6 +102,8 @@ export const Top: FC = () => {
 							fontWeight: 700,
 							color: "#fefefe",
 							textShadow: "0 8px 30px rgba(0,0,0,0.75)",
+							fontFamily: "Inter, sans-serif",
+							fontStyle: "light",
 						}}
 					>
 						Th3rm1t3.com
@@ -59,7 +123,6 @@ export const Top: FC = () => {
 				</div>
 			</section>
 			<section>
-				{/* 各種リンク用のアイコン */}
 				<div
 					style={{
 						display: "flex",
@@ -86,6 +149,7 @@ export const Top: FC = () => {
 								src="/x.svg"
 								alt="X"
 								style={{ width: "32px", height: "32px", display: "block" }}
+								loading="lazy"
 							/>
 							<span style={{ fontSize: "0.85rem" }}>Twitter</span>
 						</a>
@@ -108,6 +172,7 @@ export const Top: FC = () => {
 								src="/github.svg"
 								alt="GitHub"
 								style={{ width: "32px", height: "32px", display: "block" }}
+								loading="lazy"
 							/>
 							<span style={{ fontSize: "0.85rem" }}>GitHub</span>
 						</a>
@@ -130,6 +195,7 @@ export const Top: FC = () => {
 								src="/zenn.svg"
 								alt="Zenn"
 								style={{ width: "32px", height: "32px", display: "block" }}
+								loading="lazy"
 							/>
 							<span style={{ fontSize: "0.85rem" }}>Zenn</span>
 						</a>
