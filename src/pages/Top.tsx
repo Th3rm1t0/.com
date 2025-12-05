@@ -1,20 +1,40 @@
-import {
-	type FC,
-	lazy,
-	Suspense,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
-
-const LazyBoxRotate = lazy(async () => {
-	const module = await import("../components/BoxRotate");
-	return { default: module.BoxRotate };
-});
+import { type FC, useEffect, useRef, useState } from "react";
+import { AboutMe } from "../components/AbountMe";
+import { HeroSection } from "../components/HeroSection";
+import { Profile } from "../components/Profile";
+import type { SocialLink } from "../components/SocialLinks";
+import { SocialLinks } from "../components/SocialLinks";
 
 export const Top: FC = () => {
 	const [shouldLoadBox, setShouldLoadBox] = useState(false);
 	const heroRef = useRef<HTMLElement | null>(null);
+
+	const socialLinks: SocialLink[] = [
+		{
+			id: "x",
+			label: "Twitter",
+			href: "https://x.com/Th3rm1t3",
+			iconSrc: "/x.svg",
+		},
+		{
+			id: "github",
+			label: "GitHub",
+			href: "https://github.com/Th3rm1t0",
+			iconSrc: "/github.svg",
+		},
+		{
+			id: "zenn",
+			label: "Zenn",
+			href: "https://zenn.dev/th3rm1t3",
+			iconSrc: "/zenn.svg",
+		},
+		{
+			id: "bluesky",
+			label: "Bluesky",
+			href: "https://bsky.app/profile/th3rm1t3.bsky.social",
+			iconSrc: "/bluesky.svg",
+		},
+	];
 
 	useEffect(() => {
 		if (shouldLoadBox) return;
@@ -36,172 +56,50 @@ export const Top: FC = () => {
 	}, [shouldLoadBox]);
 
 	return (
-		<main
-			style={{
-				minHeight: "100vh",
-				backgroundColor: "#17182cff",
-				color: "#e8e8e8",
-				fontFamily: "'Noto Sans JP', sans-serif",
-			}}
-		>
-			<section
-				ref={(node) => {
-					heroRef.current = node;
-				}}
-				style={{
-					position: "relative",
-					minHeight: "65vh",
-					overflow: "hidden",
-				}}
-			>
-				{shouldLoadBox ? (
-					<Suspense
-						fallback={
-							<div
-								aria-hidden="true"
-								style={{
-									position: "absolute",
-									inset: 0,
-									background:
-										"radial-gradient(circle at center, rgba(255,255,255,0.08), transparent 60%)",
-								}}
-							/>
-						}
-					>
-						<LazyBoxRotate />
-					</Suspense>
-				) : (
-					<div
-						aria-hidden="true"
-						style={{
-							position: "absolute",
-							inset: 0,
-							background:
-								"radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 60%)",
-						}}
-					/>
-				)}
-				<div
-					style={{
-						position: "relative",
-						zIndex: 1,
-						display: "flex",
-						flexDirection: "column",
-						alignItems: "center",
-						justifyContent: "center",
-						width: "100%",
-						height: "100%",
-						padding: "3rem 1.5rem",
-						textAlign: "center",
-					}}
-				>
-					<h1
-						style={{
-							margin: "1.5em 0 0 0",
-							fontSize: "clamp(3rem, 7vw, 4.5rem)",
-							fontWeight: 700,
-							color: "#fefefe",
-							textShadow: "0 8px 30px rgba(0,0,0,0.75)",
-							fontFamily: "Inter, sans-serif",
-							fontStyle: "light",
-						}}
-					>
-						Th3rm1t3.com
-					</h1>
-					<p
-						style={{
-							maxWidth: "620px",
-							margin: "1.25rem auto 2rem",
-							fontSize: "1rem",
-							lineHeight: 1.6,
-							color: "#fefefe",
-						}}
-					>
-						気軽にテルミットと呼んでください
-						<br />
-					</p>
-				</div>
-			</section>
-			<section>
-				<div
-					style={{
-						display: "flex",
-						justifyContent: "center",
-						gap: "1rem",
-						padding: "1rem 0",
-					}}
-				>
-					<div id="x">
-						<a
-							href="https://x.com/Th3rm1t3"
-							target="_blank"
-							rel="noopener noreferrer"
-							style={{
-								color: "#fefefe",
-								textDecoration: "none",
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								gap: "0.5rem",
-							}}
-						>
-							<img
-								src="/x.svg"
-								alt="X"
-								style={{ width: "32px", height: "32px", display: "block" }}
-								loading="lazy"
-							/>
-							<span style={{ fontSize: "0.85rem" }}>Twitter</span>
-						</a>
-					</div>
-					<div id="github">
-						<a
-							href="https://github.com/Th3rm1t0"
-							target="_blank"
-							rel="noopener noreferrer"
-							style={{
-								color: "#fefefe",
-								textDecoration: "none",
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								gap: "0.5rem",
-							}}
-						>
-							<img
-								src="/github.svg"
-								alt="GitHub"
-								style={{ width: "32px", height: "32px", display: "block" }}
-								loading="lazy"
-							/>
-							<span style={{ fontSize: "0.85rem" }}>GitHub</span>
-						</a>
-					</div>
-					<div id="zenn">
-						<a
-							href="https://zenn.dev/th3rm1t3"
-							target="_blank"
-							rel="noopener noreferrer"
-							style={{
-								color: "#fefefe",
-								textDecoration: "none",
-								display: "flex",
-								flexDirection: "column",
-								alignItems: "center",
-								gap: "0.5rem",
-							}}
-						>
-							<img
-								src="/zenn.svg"
-								alt="Zenn"
-								style={{ width: "32px", height: "32px", display: "block" }}
-								loading="lazy"
-							/>
-							<span style={{ fontSize: "0.85rem" }}>Zenn</span>
-						</a>
-					</div>
-				</div>
-			</section>
+		<main className="min-h-screen bg-[#17182cff] font-['Noto Sans JP',sans-serif] text-[#e8e8e8]">
+			<div>
+				<HeroSection
+					heroRef={heroRef}
+					shouldLoadBox={shouldLoadBox}
+					title="Th3rm1t3.com"
+					tagline={
+						<>
+							Hello and, again, welcome to my site.
+							<br />
+						</>
+					}
+				/>
+			</div>
+			<div className="mt-4">
+				<SocialLinks links={socialLinks} />
+			</div>
+			<div className="mt-24">
+				<Profile
+					imageSrc="/icon.webp"
+					name="Th3rm1t3 / テルミット"
+					bio={<>やったりやらなかったり系エンジニア</>}
+				/>
+			</div>
+			<div>
+				<AboutMe
+					career={
+						<ul className="list-disc list-inside space-y-2">
+							<li>~2024.03: IT系専門学校</li>
+							<li>
+								2024.04~現在: 某社 / エンジニア職
+								<ul className="list-disc mt-2 list-inside ml-4 space-y-1">
+									<li>
+										Go, TypeScript を使用した Web
+										バックエンドシステム、およびクラウドインフラ(IaC)関連の開発・設計
+									</li>
+								</ul>
+							</li>
+						</ul>
+					}
+					skills={<>Skills content here</>}
+					curiosities={<>Curiosities content here</>}
+				/>
+			</div>
 		</main>
 	);
 };
