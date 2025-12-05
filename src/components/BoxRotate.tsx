@@ -32,7 +32,10 @@ const AsciiRenderer: FC = () => {
 	const effectRef = useRef<AsciiEffect | null>(null);
 
 	useEffect(() => {
-		const effect = new AsciiEffect(gl, " .:-+*=%@#", { invert: true });
+		const effect = new AsciiEffect(gl, " .:-+*=%@#", {
+			invert: true,
+			resolution: 0.1,
+		});
 		effect.domElement.style.position = "absolute";
 		effect.domElement.style.top = "0";
 		effect.domElement.style.left = "0";
@@ -70,8 +73,8 @@ export const BoxRotate: FC = () => {
 		>
 			<color attach="background" args={["#050914"]} />
 			<ambientLight intensity={0.01} />
-			<directionalLight color="#727272ff" position={[2, 3, 5]} />
-			<RotatingBox />
+			<directionalLight color="#727272ff" position={[2.5, 4, 6]} />
+			<RotatingBox position={[-0.4, 0, 0]} />
 			<AsciiRenderer />
 		</Canvas>
 	);
