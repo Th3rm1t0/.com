@@ -43,7 +43,7 @@ export const HeroSection: FC<HeroSectionProps> = ({
 				/>
 			)}
 			<div className="relative z-10 flex h-full w-full flex-col items-center justify-center px-6 py-12 text-center">
-				<h1 className="mt-[2em] font-['Inter',sans-serif] text-[clamp(3rem,7vw,4.5rem)] font-bold text-[#fefefe]">
+				<h1 className="sm:mt-[2em] mt-[4em] font-['Inter',sans-serif] text-[clamp(3rem,7vw,4.5rem)] font-bold text-[#fefefe]">
 					{title}
 				</h1>
 				<div className="mx-auto mb-8 mt-5 p-1 max-w-[620px] text-base leading-[1.6] text-[#fefefe] backdrop-blur rounded">
