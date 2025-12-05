@@ -1,5 +1,5 @@
 import { type FC, useEffect, useRef, useState } from "react";
-import { AboutMe } from "../components/AbountMe";
+import { AboutMe } from "../components/AboutMe";
 import { HeroSection } from "../components/HeroSection";
 import { Profile } from "../components/Profile";
 import type { SocialLink } from "../components/SocialLinks";
