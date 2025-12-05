@@ -14,34 +14,40 @@ const ASCII_COLOR = "#727272ff";
 const DEFAULT_BOX_X = -0.6;
 const DEFAULT_BOX_SCALE = 2.5;
 
-const getResponsiveBoxX = (width: number) => {
-	if (width <= 480) return -0.1;
-	if (width <= 768) return -0.1;
-	if (width <= 1024) return -0.4;
-	return DEFAULT_BOX_X;
+type BoxParams = {
+	x: number;
+	scale: number;
 };
 
-const getResponsiveBoxScale = (width: number) => {
-	if (width <= 480) return 2.0;
-	if (width <= 768) return 2.0;
-	if (width <= 1024) return 2.3;
-	return DEFAULT_BOX_SCALE;
+const getBoxParams = (width: number): BoxParams => {
+	if (width <= 480) {
+		return { x: -0.05, scale: 1.9 };
+	}
+	if (width <= 768) {
+		return { x: -0.15, scale: 2.0 };
+	}
+	if (width <= 1024) {
+		return { x: -0.35, scale: 2.3 };
+	}
+	return { x: DEFAULT_BOX_X, scale: DEFAULT_BOX_SCALE };
 };
 
-const useResponsiveBoxX = () => {
-	const [boxX, setBoxX] = useState(() => {
-		if (typeof window === "undefined") return DEFAULT_BOX_X;
-		return getResponsiveBoxX(window.innerWidth);
+const useResponsiveBoxParams = () => {
+	const [params, setParams] = useState<BoxParams>(() => {
+		if (typeof window === "undefined") {
+			return { x: DEFAULT_BOX_X, scale: DEFAULT_BOX_SCALE };
+		}
+		return getBoxParams(window.innerWidth);
 	});
 
 	useEffect(() => {
 		if (typeof window === "undefined") return;
-		const handleResize = () => setBoxX(getResponsiveBoxX(window.innerWidth));
+		const handleResize = () => setParams(getBoxParams(window.innerWidth));
 		window.addEventListener("resize", handleResize);
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	return boxX;
+	return params;
 };
 
 const RotatingBox: FC<ThreeElements["mesh"]> = (props) => {
@@ -55,11 +61,7 @@ const RotatingBox: FC<ThreeElements["mesh"]> = (props) => {
 	});
 
 	return (
-		<mesh
-			{...props}
-			ref={meshRef}
-			scale={getResponsiveBoxScale(window.innerWidth)}
-		>
+		<mesh {...props} ref={meshRef}>
 			<boxGeometry args={[1, 1, 1]} />
 			<meshStandardMaterial color="#ffffff" />
 		</mesh>
@@ -105,7 +107,7 @@ const AsciiRenderer: FC = () => {
 };
 
 export const BoxRotate: FC = () => {
-	const boxX = useResponsiveBoxX();
+	const { x, scale } = useResponsiveBoxParams();
 
 	return (
 		<Canvas
@@ -115,7 +117,7 @@ export const BoxRotate: FC = () => {
 			<color attach="background" args={["#050914"]} />
 			<ambientLight intensity={0.01} />
 			<directionalLight color={ASCII_COLOR} position={[2.5, 4, 6]} />
-			<RotatingBox position={[boxX, 0, 0]} />
+			<RotatingBox position={[x, 0, 0]} scale={scale} />
 			<AsciiRenderer />
 		</Canvas>
 	);
