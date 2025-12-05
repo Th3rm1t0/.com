@@ -5,22 +5,63 @@ import {
 	useThree,
 } from "@react-three/fiber";
 import type { FC } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { Mesh } from "three";
 import { AsciiEffect } from "three/examples/jsm/effects/AsciiEffect";
 
-const BOX_NAME = "rotating-box";
+const ASCII_CHAR_SET = " .:-+*=%@#";
+const ASCII_COLOR = "#727272ff";
+const DEFAULT_BOX_X = -0.6;
+const DEFAULT_BOX_SCALE = 2.5;
+
+type BoxParams = {
+	x: number;
+	scale: number;
+};
+
+const getBoxParams = (width: number): BoxParams => {
+	if (width <= 480) {
+		return { x: -0.05, scale: 1.9 };
+	}
+	if (width <= 768) {
+		return { x: -0.15, scale: 2.0 };
+	}
+	if (width <= 1024) {
+		return { x: -0.35, scale: 2.3 };
+	}
+	return { x: DEFAULT_BOX_X, scale: DEFAULT_BOX_SCALE };
+};
+
+const useResponsiveBoxParams = () => {
+	const [params, setParams] = useState<BoxParams>(() => {
+		if (typeof window === "undefined") {
+			return { x: DEFAULT_BOX_X, scale: DEFAULT_BOX_SCALE };
+		}
+		return getBoxParams(window.innerWidth);
+	});
+
+	useEffect(() => {
+		if (typeof window === "undefined") return;
+		const handleResize = () => setParams(getBoxParams(window.innerWidth));
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
+	return params;
+};
 
 const RotatingBox: FC<ThreeElements["mesh"]> = (props) => {
-	useFrame(({ scene }, delta) => {
-		const mesh = scene.getObjectByName(BOX_NAME);
-		if (!mesh) return;
-		mesh.rotation.x += delta * 0.5;
-		mesh.rotation.y += delta * 0.7;
-		mesh.rotation.z += delta * 0.3;
+	const meshRef = useRef<Mesh>(null);
+
+	useFrame((_state, delta) => {
+		if (!meshRef.current) return;
+		meshRef.current.rotation.x += delta * 0.5;
+		meshRef.current.rotation.y += delta * 0.7;
+		meshRef.current.rotation.z += delta * 0.3;
 	});
 
 	return (
-		<mesh {...props} name={BOX_NAME} scale={2.5}>
+		<mesh {...props} ref={meshRef}>
 			<boxGeometry args={[1, 1, 1]} />
 			<meshStandardMaterial color="#ffffff" />
 		</mesh>
@@ -32,7 +73,7 @@ const AsciiRenderer: FC = () => {
 	const effectRef = useRef<AsciiEffect | null>(null);
 
 	useEffect(() => {
-		const effect = new AsciiEffect(gl, " .:-+*=%@#", {
+		const effect = new AsciiEffect(gl, ASCII_CHAR_SET, {
 			invert: true,
 			resolution: 0.1,
 		});
@@ -40,7 +81,7 @@ const AsciiRenderer: FC = () => {
 		effect.domElement.style.top = "0";
 		effect.domElement.style.left = "0";
 		effect.domElement.style.pointerEvents = "none";
-		effect.domElement.style.color = "#727272ff";
+		effect.domElement.style.color = ASCII_COLOR;
 		effect.domElement.style.backgroundColor = "transparent";
 		effectRef.current = effect;
 
@@ -66,6 +107,8 @@ const AsciiRenderer: FC = () => {
 };
 
 export const BoxRotate: FC = () => {
+	const { x, scale } = useResponsiveBoxParams();
+
 	return (
 		<Canvas
 			style={{ position: "absolute", inset: 0 }}
@@ -73,8 +116,8 @@ export const BoxRotate: FC = () => {
 		>
 			<color attach="background" args={["#050914"]} />
 			<ambientLight intensity={0.01} />
-			<directionalLight color="#727272ff" position={[2.5, 4, 6]} />
-			<RotatingBox position={[-0.4, 0, 0]} />
+			<directionalLight color={ASCII_COLOR} position={[2.5, 4, 6]} />
+			<RotatingBox position={[x, 0, 0]} scale={scale} />
 			<AsciiRenderer />
 		</Canvas>
 	);
