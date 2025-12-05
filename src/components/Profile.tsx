@@ -18,7 +18,7 @@ export const Profile: FC<ProfileProps> = ({ imageSrc, name, bio }) => {
 						loading="lazy"
 					/>
 					<div className="text-center text-slate-200 sm:text-left">
-						<h2 className="text-2xl font-semibold tracking-wide text-white">
+						<h2 className="md:text-4xl text-2xl font-semibold tracking-wide text-white">
 							{name}
 						</h2>
 						<p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">

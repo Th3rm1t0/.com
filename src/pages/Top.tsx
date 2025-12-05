@@ -1,4 +1,5 @@
 import { type FC, useEffect, useRef, useState } from "react";
+import { AboutMe } from "../components/AbountMe";
 import { HeroSection } from "../components/HeroSection";
 import { Profile } from "../components/Profile";
 import type { SocialLink } from "../components/SocialLinks";
@@ -76,7 +77,27 @@ export const Top: FC = () => {
 				<Profile
 					imageSrc="/icon.webp"
 					name="Th3rm1t3 / テルミット"
-					bio={<>やったりやらなかったり系人間</>}
+					bio={<>やったりやらなかったり系エンジニア</>}
+				/>
+			</div>
+			<div>
+				<AboutMe
+					career={
+						<ul className="list-disc list-inside space-y-2">
+							<li>~2024.03: IT系専門学校</li>
+							<li>
+								2024.04~現在: 某社 / エンジニア職
+								<ul className="list-disc mt-2 list-inside ml-4 space-y-1">
+									<li>
+										Go, TypeScript を使用した Web
+										バックエンドシステム、およびクラウドインフラ(IaC)関連の開発・設計
+									</li>
+								</ul>
+							</li>
+						</ul>
+					}
+					skills={<>Skills content here</>}
+					curiosities={<>Curiosities content here</>}
 				/>
 			</div>
 		</main>
