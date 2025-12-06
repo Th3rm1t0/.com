@@ -64,7 +64,7 @@ export const Top: FC = () => {
 					title="Th3rm1t3.com"
 					tagline={
 						<>
-							Hello and, again, welcome to my site.
+							Hello and, again, welcome to Th3rm1t3's site.
 							<br />
 						</>
 					}
@@ -89,8 +89,9 @@ export const Top: FC = () => {
 								2024.04~現在: 某社 / エンジニア職
 								<ul className="list-disc mt-2 list-inside ml-4 space-y-1">
 									<li>
-										Go, TypeScript を使用した Web
-										バックエンドシステム、およびクラウドインフラ(IaC)関連の開発・設計
+										Go, Python, TypeScript を使用した Web
+										バックエンドシステム、およびクラウドインフラ(AWS
+										CDK)関連の開発・設計
 									</li>
 								</ul>
 							</li>

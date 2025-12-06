@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Mesh } from "three";
 import { AsciiEffect } from "three/examples/jsm/effects/AsciiEffect";
 
-const ASCII_CHAR_SET = " .:-+*=%@#";
+const ASCII_CHAR_SET = " .:-=+*#%@";
 const ASCII_COLOR = "#727272ff";
 const DEFAULT_BOX_X = -0.6;
 const DEFAULT_BOX_SCALE = 2.5;
