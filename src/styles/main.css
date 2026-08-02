@@ -25,9 +25,13 @@
   --band-magenta: #ff2e88;
   --band-cyan: #00d5dd;
   --band-yellow: #ffd60a;
+  --band-lime: #9ef01a;
+  --band-orange: #ff6b2c;
+  --band-violet: #a97cff;
   --band-ink: #12101a;
   --band-paper: #fdf9f0;
   --band-halftone: rgba(18, 16, 26, 0.14);
+  --band-grid: rgba(15, 23, 42, 0.11);
 
   --font-display: "Inter", sans-serif;
   --font-body: "Noto Sans JP", sans-serif;
@@ -58,8 +62,12 @@
   --band-magenta: #ec2179;
   --band-cyan: #06c3cb;
   --band-yellow: #f2c500;
+  --band-lime: #8ad617;
+  --band-orange: #f05e1e;
+  --band-violet: #9a6ef0;
   --band-paper: #e9e2d3;
   --band-halftone: rgba(18, 16, 26, 0.17);
+  --band-grid: rgba(248, 250, 252, 0.09);
 }
 
 
@@ -98,11 +106,31 @@
   --color-band-magenta: var(--band-magenta);
   --color-band-cyan: var(--band-cyan);
   --color-band-yellow: var(--band-yellow);
+  --color-band-lime: var(--band-lime);
+  --color-band-orange: var(--band-orange);
+  --color-band-violet: var(--band-violet);
   --color-band-ink: var(--band-ink);
   --color-band-paper: var(--band-paper);
 
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+
+  --animate-skill-modal-in: skill-modal-in 220ms cubic-bezier(0.22, 0.9, 0.3, 1);
+  --animate-skill-backdrop-in: skill-backdrop-in 200ms ease-out;
+
+  @keyframes skill-modal-in {
+    from {
+      opacity: 0;
+      translate: 0 1.25rem;
+      scale: 0.97;
+    }
+  }
+
+  @keyframes skill-backdrop-in {
+    from {
+      opacity: 0;
+    }
+  }
 }
 
 html,

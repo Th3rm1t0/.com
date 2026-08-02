@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { HeroSection } from "@/features/hero";
 import { Profile, SocialLinks, socialLinks } from "@/features/profile";
+import { SkillsSection, skillCategories } from "@/features/skills";
 import { ThemeToggle } from "@/features/theme";
 
 export const Top: FC = () => {
@@ -27,6 +28,7 @@ export const Top: FC = () => {
 					</>}
 				/>
 			</div>
+			<SkillsSection categories={skillCategories} />
 		</main>
 	);
 };
